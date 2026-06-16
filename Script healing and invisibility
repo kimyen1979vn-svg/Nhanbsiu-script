@@ -1,149 +1,65 @@
 local SG = Instance.new("ScreenGui", game.CoreGui)
 local MF = Instance.new("Frame", SG)
-local TL = Instance.new("TextLabel", MF)
 local B1 = Instance.new("TextButton", MF)
 local B2 = Instance.new("TextButton", MF)
 local B3 = Instance.new("TextButton", SG)
+local BF = Instance.new("TextButton", MF)
+local BS = Instance.new("TextButton", MF)
 local SI = Instance.new("TextBox", MF)
-local MB = Instance.new("ImageButton", SG)
 local MI = Instance.new("TextBox", MF)
+local MS = Instance.new("TextBox", MF)
+local SF = Instance.new("TextBox", MF)
+local MB = Instance.new("ImageButton", SG)
 
-MF.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-MF.Position = UDim2.new(0.35, 0, 0.4, 0)
-MF.Size = UDim2.new(0, 320, 0, 180)
-MF.Active, MF.Draggable = true, true
+MF.Size, MF.Position, MF.BackgroundColor3, MF.Active, MF.Draggable = UDim2.new(0, 320, 0, 260), UDim2.new(0.35, 0, 0.4, 0), Color3.fromRGB(30,30,30), true, true
 Instance.new("UICorner", MF).CornerRadius = UDim.new(0, 8)
+local function c(b,t,p,s,bg) b.Parent=MF; b.Position=p; b.Size=s; b.Text=t; b.BackgroundColor3=bg; b.TextColor3=Color3.new(1,1,1); Instance.new("UICorner",b).CornerRadius=UDim.new(0,6) end
+c(B1, "HỒI MÁU: TẮT", UDim2.new(0.05,0,0.16,0), UDim2.new(0.42,0,0,32), Color3.fromRGB(200,50,50))
+c(B2, "HỒI ĐẦY MÁU", UDim2.new(0.05,0,0.32,0), UDim2.new(0.42,0,0,32), Color3.fromRGB(0,120,255))
+c(BS, "TÌM SERVER", UDim2.new(0.53,0,0.32,0), UDim2.new(0.42,0,0,60), Color3.fromRGB(0,150,100))
+c(BF, "FLY: TẮT", UDim2.new(0.53,0,0.62,0), UDim2.new(0.42,0,0,72), Color3.fromRGB(200,50,50))
+B3.Parent=SG; B3.Position=UDim2.new(0.02,0,0.75,0); B3.Size=UDim2.new(0,120,0,45); B3.Text="TÀNG HÌNH: TẮT"; B3.BackgroundColor3=Color3.fromRGB(200,50,50); B3.Active=true; B3.Draggable=true; Instance.new("UICorner",B3)
+SI.Parent=MF; SI.Position=UDim2.new(0.05,0,0.49,0); SI.Size=UDim2.new(0.42,0,0,28); SI.PlaceholderText="Tốc độ (VD: 50)"
+MI.Parent=MF; MI.Position=UDim2.new(0.53,0,0.16,0); MI.Size=UDim2.new(0.42,0,0,32); MI.PlaceholderText="Máu tối đa"
+MS.Parent=MF; MS.Position=UDim2.new(0.05,0,0.64,0); MS.Size=UDim2.new(0.42,0,0,28); MS.PlaceholderText="Số người"
+SF.Parent=MF; SF.Position=UDim2.new(0.05,0,0.79,0); SF.Size=UDim2.new(0.42,0,0,28); SF.PlaceholderText="Tốc độ Fly"
+MB.Parent=SG; MB.Size=UDim2.new(0,52,0,52); MB.Position=UDim2.new(0.1,0,0.1,0); MB.Image="rbxassetid://10842223891"; MB.Active=true; MB.Draggable=true
 
-TL.Size = UDim2.new(1, 0, 0, 35)
-TL.Text = "HỒI MÁU & CÀI ĐẶT MENU"
-TL.TextColor3 = Color3.new(1, 1, 1)
-TL.Font = Enum.Font.SourceSansBold
-TL.TextSize = 16
-TL.BackgroundTransparency = 1
+local HM, TH, TD, FlyActive, FlySpeed, MaxH, TargetP = false, false, 16, false, 50, 100, 4
+local GB, SP, CC, JC, FC, BG, BV
 
-local function cb(b, t, p, s, c)
-    b.Position, b.Size, b.Text, b.BackgroundColor3 = p, s, t, c
-    b.TextColor3, b.Font, b.TextSize = Color3.new(1, 1, 1), Enum.Font.SourceSansBold, 14
-    Instance.new("UICorner", b).CornerRadius = UDim.new(0, 6)
-end
-
-cb(B1, "HỒI MÁU: TẮT", UDim2.new(0.05, 0, 0.25, 0), UDim2.new(0.42, 0, 0, 35), Color3.fromRGB(200, 50, 50))
-cb(B2, "HỒI ĐẦY MÁU", UDim2.new(0.05, 0, 0.55, 0), UDim2.new(0.42, 0, 0, 35), Color3.fromRGB(0, 120, 255))
-
-SI.Position, SI.Size = UDim2.new(0.05, 0, 0.78, 0), UDim2.new(0.42, 0, 0, 30)
-SI.PlaceholderText, SI.Text = "Tốc độ (VD: 50)", ""
-SI.Font, SI.TextSize, SI.BackgroundColor3, SI.TextColor3 = Enum.Font.SourceSansBold, 14, Color3.fromRGB(50, 50, 50), Color3.new(1, 1, 1)
-Instance.new("UICorner", SI).CornerRadius = UDim.new(0, 6)
-
-MI.Position, MI.Size = UDim2.new(0.53, 0, 0.25, 0), UDim2.new(0.42, 0, 0, 35)
-MI.PlaceholderText, MI.Text = "Máu tối đa (MĐ: 100)", ""
-MI.Font, MI.TextSize, MI.BackgroundColor3, MI.TextColor3 = Enum.Font.SourceSansBold, 12, Color3.fromRGB(50, 50, 50), Color3.new(1, 1, 1)
-Instance.new("UICorner", MI).CornerRadius = UDim.new(0, 6)
-
-cb(B3, "TÀNG HÌNH: TẮT", UDim2.new(0.02, 0, 0.75, 0), UDim2.new(0, 120, 0, 45), Color3.fromRGB(200, 50, 50))
-B3.Active, B3.Draggable = true, true
-
-MB.Size, MB.Position = UDim2.new(0, 52, 0, 52), UDim2.new(0.1, 0, 0.1, 0)
-MB.Image, MB.ScaleType, MB.BackgroundColor3 = "rbxassetid://10842223891", Enum.ScaleType.Fit, Color3.fromRGB(230, 180, 40)
-MB.Active, MB.Draggable = true, true
-Instance.new("UICorner", MB).CornerRadius = UDim.new(0, 8)
-
-local HM, TH, TD = false, false, nil
-local MaxMauTuyChinh = 100
-local GB, SP, CC, JumpConnection
-
-task.spawn(function()
-    while true do
-        local p = game.Players.LocalPlayer
-        local c = p.Character
-        if c and c:FindFirstChildOfClass("Humanoid") then
-            local h = c:FindFirstChildOfClass("Humanoid")
-            if h.MaxHealth ~= MaxMauTuyChinh then h.MaxHealth = MaxMauTuyChinh end
-            if HM and h.Health > 0 and h.Health < h.MaxHealth then
-                h.Health = math.min(h.Health + 2000, h.MaxHealth)
-            end
-            h.WalkSpeed = TH and 0 or (TD or 16)
-        end
-        task.wait(0.01)
-    end
-end)
-
-B1.MouseButton1Click:Connect(function()
-    HM = not HM
-    B1.BackgroundColor3 = HM and Color3.fromRGB(50, 200, 50) or Color3.fromRGB(200, 50, 50)
-    B1.Text = HM and "HỒI MÁU: BẬT" or "HỒI MÁU: TẮT"
-end)
-
-B2.MouseButton1Click:Connect(function()
-    local h = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if h then h.Health = h.MaxHealth end
-end)
-
+B1.MouseButton1Click:Connect(function() HM = not HM; B1.BackgroundColor3 = HM and Color3.fromRGB(50,200,50) or Color3.fromRGB(200,50,50); B1.Text = HM and "HỒI MÁU: BẬT" or "HỒI MÁU: TẮT" end)
+B2.MouseButton1Click:Connect(function() local h = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") if h then h.Health = h.MaxHealth end end)
 B3.MouseButton1Click:Connect(function()
-    local c = game.Players.LocalPlayer.Character
-    if not c or not c:FindFirstChild("HumanoidRootPart") then return end
-    local r, cam, hum = c.HumanoidRootPart, workspace.CurrentCamera, c:FindFirstChildOfClass("Humanoid")
-    TH = not TH
-    
-    B3.BackgroundColor3 = TH and Color3.fromRGB(50, 200, 50) or Color3.fromRGB(200, 50, 50)
-    B3.Text = TH and "TÀNG HÌNH: BẬT" or "TÀNG HÌNH: TẮT"
-    
+    local c = game.Players.LocalPlayer.Character; if not c then return end
+    TH = not TH; B3.BackgroundColor3 = TH and Color3.fromRGB(50,200,50) or Color3.fromRGB(200,50,50); B3.Text = TH and "TÀNG HÌNH: BẬT" or "TÀNG HÌNH: TẮT"
     if TH then
-        c.Archivable = true
-        GB = c:Clone()
-        c.Archivable = false
-        GB.Parent = workspace
-        
-        local ghum = GB:FindFirstChildOfClass("Humanoid")
-        if ghum then ghum.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None end
-        
-        local gr = GB:FindFirstChild("HumanoidRootPart")
-        if gr then gr.Anchored = false end -- Không khóa cứng để bóng có thể rơi tự do
-        
-        SP = Instance.new("Part", workspace)
-        SP.Size, SP.Transparency, SP.Anchored = Vector3.new(6, 1, 6), 1, true
-        
-        for _, p in pairs(c:GetDescendants()) do
-            if p:IsA("BasePart") or p:IsA("Decal") then p.Transparency = 1 end
-        end
-        
-        -- Đồng bộ phím Nhảy (Space) sang cái bóng
-        JumpConnection = hum:GetPropertyChangedSignal("Jump"):Connect(function()
-            if ghum then ghum.Jump = hum.Jump end
-        end)
-        
-        CC = game:GetService("RunService").RenderStepped:Connect(function()
-            if GB and gr and r and SP and hum and ghum then
-                local md = hum.MoveDirection
-                local sp = TD or 16
-                
-                -- Di chuyển bóng mượt mà dưới đất
-                gr.CFrame = gr.CFrame + (md * (sp * game:GetService("RunService").RenderStepped:Wait()))
-                if md.Magnitude > 0 then gr.CFrame = CFrame.new(gr.Position, gr.Position + md) end
-                
-                -- Khóa nhân vật thật (đang tàng hình) bám sát theo vị trí bóng dưới đất
-                r.CFrame = gr.CFrame
-                SP.CFrame = r.CFrame - Vector3.new(0, 3, 0)
-                cam.CameraSubject = ghum
-            end
-        end)
+        c.Archivable = true; GB = c:Clone(); c.Archivable = false; GB.Parent = workspace
+        for _,v in pairs(GB:GetDescendants()) do if v:IsA("BasePart") then v.Color=Color3.fromRGB(100,100,100); v.Transparency=0.4 elseif v:IsA("Accessory") or v:IsA("Shirt") or v:IsA("Pants") then v:Destroy() end end
+        for _,v in pairs(c:GetDescendants()) do if v:IsA("BasePart") then v.Transparency=1 end end
+        CC = game:GetService("RunService").RenderStepped:Connect(function() if GB and GB:FindFirstChild("HumanoidRootPart") and c.HumanoidRootPart then GB.HumanoidRootPart.CFrame = c.HumanoidRootPart.CFrame end end)
     else
-        if CC then CC:Disconnect() end
-        if JumpConnection then JumpConnection:Disconnect() end
-        if GB and r then 
-            local gr = GB:FindFirstChild("HumanoidRootPart")
-            if gr then r.CFrame = gr.CFrame end
-            GB:Destroy() GB = nil 
-        end
-        if SP then SP:Destroy() end
-        task.wait(0.05)
-        cam.CameraSubject = hum
-        for _, p in pairs(c:GetDescendants()) do
-            if (p:IsA("BasePart") and p.Name ~= "HumanoidRootPart") or p:IsA("Decal") then p.Transparency = 0 end
-        end
+        if CC then CC:Disconnect() end; if GB then GB:Destroy() end
+        for _,v in pairs(c:GetDescendants()) do if v:IsA("BasePart") then v.Transparency=0 end end
     end
 end)
-
-SI.FocusLost:Connect(function() TD = tonumber(SI.Text) end)
-MI.FocusLost:Connect(function() MaxMauTuyChinh = tonumber(MI.Text) or 100 end)
+BF.MouseButton1Click:Connect(function()
+    FlyActive = not FlyActive; BF.BackgroundColor3 = FlyActive and Color3.fromRGB(50,200,50) or Color3.fromRGB(200,50,50); BF.Text = FlyActive and "FLY: BẬT" or "FLY: TẮT"
+    local r = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+    if FlyActive and r then
+        BG = Instance.new("BodyGyro", r); BG.MaxTorque = Vector3.new(1,1,1)*9e9; BG.CFrame = r.CFrame
+        BV = Instance.new("BodyVelocity", r); BV.MaxForce = Vector3.new(1,1,1)*9e9; BV.Velocity = Vector3.new(0,0,0)
+        FC = game:GetService("RunService").RenderStepped:Connect(function() BG.CFrame = workspace.CurrentCamera.CFrame; BV.Velocity = workspace.CurrentCamera.CFrame.LookVector * (game.Players.LocalPlayer.Character.Humanoid.MoveDirection.Magnitude > 0 and FlySpeed or 0) end)
+    else
+        if FC then FC:Disconnect() end; if BG then BG:Destroy() end; if BV then BV:Destroy() end
+    end
+end)
+BS.MouseButton1Click:Connect(function() local p=game.Players.LocalPlayer; game:GetService("TeleportService"):Teleport(game.PlaceId, p) end)
+SI.FocusLost:Connect(function() TD = tonumber(SI.Text) or 16 end)
+MI.FocusLost:Connect(function() MaxH = tonumber(MI.Text) or 100 end)
+SF.FocusLost:Connect(function() FlySpeed = tonumber(SF.Text) or 50 end)
 MB.MouseButton1Click:Connect(function() MF.Visible = not MF.Visible end)
+game:GetService("RunService").RenderStepped:Connect(function()
+    local h = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    if h then h.MaxHealth = MaxH; if HM and h.Health < h.MaxHealth then h.Health = math.min(h.Health + 1, h.MaxHealth) end; if not FlyActive then h.WalkSpeed = TH and 0 or TD end end
+end)
