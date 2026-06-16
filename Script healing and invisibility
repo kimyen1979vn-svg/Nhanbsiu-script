@@ -1,65 +1,159 @@
 local SG = Instance.new("ScreenGui", game.CoreGui)
 local MF = Instance.new("Frame", SG)
-local B1 = Instance.new("TextButton", MF)
-local B2 = Instance.new("TextButton", MF)
-local B3 = Instance.new("TextButton", SG)
-local BF = Instance.new("TextButton", MF)
-local BS = Instance.new("TextButton", MF)
-local SI = Instance.new("TextBox", MF)
-local MI = Instance.new("TextBox", MF)
-local MS = Instance.new("TextBox", MF)
-local SF = Instance.new("TextBox", MF)
 local MB = Instance.new("ImageButton", SG)
 
-MF.Size, MF.Position, MF.BackgroundColor3, MF.Active, MF.Draggable = UDim2.new(0, 320, 0, 260), UDim2.new(0.35, 0, 0.4, 0), Color3.fromRGB(30,30,30), true, true
-Instance.new("UICorner", MF).CornerRadius = UDim.new(0, 8)
-local function c(b,t,p,s,bg) b.Parent=MF; b.Position=p; b.Size=s; b.Text=t; b.BackgroundColor3=bg; b.TextColor3=Color3.new(1,1,1); Instance.new("UICorner",b).CornerRadius=UDim.new(0,6) end
-c(B1, "HỒI MÁU: TẮT", UDim2.new(0.05,0,0.16,0), UDim2.new(0.42,0,0,32), Color3.fromRGB(200,50,50))
-c(B2, "HỒI ĐẦY MÁU", UDim2.new(0.05,0,0.32,0), UDim2.new(0.42,0,0,32), Color3.fromRGB(0,120,255))
-c(BS, "TÌM SERVER", UDim2.new(0.53,0,0.32,0), UDim2.new(0.42,0,0,60), Color3.fromRGB(0,150,100))
-c(BF, "FLY: TẮT", UDim2.new(0.53,0,0.62,0), UDim2.new(0.42,0,0,72), Color3.fromRGB(200,50,50))
-B3.Parent=SG; B3.Position=UDim2.new(0.02,0,0.75,0); B3.Size=UDim2.new(0,120,0,45); B3.Text="TÀNG HÌNH: TẮT"; B3.BackgroundColor3=Color3.fromRGB(200,50,50); B3.Active=true; B3.Draggable=true; Instance.new("UICorner",B3)
-SI.Parent=MF; SI.Position=UDim2.new(0.05,0,0.49,0); SI.Size=UDim2.new(0.42,0,0,28); SI.PlaceholderText="Tốc độ (VD: 50)"
-MI.Parent=MF; MI.Position=UDim2.new(0.53,0,0.16,0); MI.Size=UDim2.new(0.42,0,0,32); MI.PlaceholderText="Máu tối đa"
-MS.Parent=MF; MS.Position=UDim2.new(0.05,0,0.64,0); MS.Size=UDim2.new(0.42,0,0,28); MS.PlaceholderText="Số người"
-SF.Parent=MF; SF.Position=UDim2.new(0.05,0,0.79,0); SF.Size=UDim2.new(0.42,0,0,28); SF.PlaceholderText="Tốc độ Fly"
-MB.Parent=SG; MB.Size=UDim2.new(0,52,0,52); MB.Position=UDim2.new(0.1,0,0.1,0); MB.Image="rbxassetid://10842223891"; MB.Active=true; MB.Draggable=true
+local TabFrame = Instance.new("Frame", MF)
+local ButtonPlayerTab = Instance.new("TextButton", TabFrame)
+local ButtonSettingTab = Instance.new("TextButton", TabFrame)
 
-local HM, TH, TD, FlyActive, FlySpeed, MaxH, TargetP = false, false, 16, false, 50, 100, 4
-local GB, SP, CC, JC, FC, BG, BV
+local PagePlayer = Instance.new("Frame", MF)
+local PageSetting = Instance.new("Frame", MF)
 
-B1.MouseButton1Click:Connect(function() HM = not HM; B1.BackgroundColor3 = HM and Color3.fromRGB(50,200,50) or Color3.fromRGB(200,50,50); B1.Text = HM and "HỒI MÁU: BẬT" or "HỒI MÁU: TẮT" end)
+local B1 = Instance.new("TextButton", PagePlayer)
+local B2 = Instance.new("TextButton", PagePlayer)
+local B3 = Instance.new("TextButton", SG)
+local BF = Instance.new("TextButton", PagePlayer)
+local BE = Instance.new("TextButton", PagePlayer)
+
+local SI = Instance.new("TextBox", PageSetting)
+local SF = Instance.new("TextBox", PageSetting)
+local MS = Instance.new("TextBox", PageSetting)
+local MI = Instance.new("TextBox", PageSetting)
+local SI_Server = Instance.new("TextBox", PageSetting)
+local BS = Instance.new("TextButton", PageSetting)
+
+MF.Size, MF.Position, MF.Active, MF.Draggable = UDim2.new(0, 340, 0, 350), UDim2.new(0.35, 0, 0.4, 0), true, true
+MF.BackgroundColor3 = Color3.fromRGB(15, 10, 30)
+
+local UIStroke = Instance.new("UIStroke", MF)
+UIStroke.Thickness = 2
+UIStroke.Color = Color3.fromRGB(186, 85, 211)
+
+local UIGradient = Instance.new("UIGradient", UIStroke)
+UIGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(138, 43, 226)),
+    ColorSequenceKeypoint.new(0.5, Color3.fromRGB(0, 191, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 20, 147))
+})
+Instance.new("UICorner", MF).CornerRadius = UDim.new(0, 10)
+
+local TL = Instance.new("TextLabel", MF)
+TL.Size = UDim2.new(1, 0, 0, 35)
+TL.Text = "✧ NEBULA COSMIC MENU ✧"
+TL.TextColor3 = Color3.fromRGB(0, 255, 255)
+TL.Font = Enum.Font.FredokaOne
+TL.TextSize = 15
+TL.BackgroundTransparency = 1
+
+TabFrame.Size = UDim2.new(1, -20, 0, 30); TabFrame.Position = UDim2.new(0, 10, 0, 35); TabFrame.BackgroundTransparency = 1
+local function styleTabButton(b, txt, pos)
+    b.Size = UDim2.new(0.48, 0, 1, 0); b.Position = pos; b.Text = txt; b.Font = Enum.Font.SourceSansBold; b.TextSize = 14; b.TextColor3 = Color3.new(1, 1, 1); b.BackgroundColor3 = Color3.fromRGB(30, 20, 55)
+    Instance.new("UICorner", b).CornerRadius = UDim.new(0, 6); local s = Instance.new("UIStroke", b) s.Thickness = 1; s.Color = Color3.fromRGB(138, 43, 226)
+end
+styleTabButton(ButtonPlayerTab, "PLAYER", UDim2.new(0, 0, 0, 0)); styleTabButton(ButtonSettingTab, "SETTING", UDim2.new(0.52, 0, 0, 0))
+ButtonPlayerTab.BackgroundColor3 = Color3.fromRGB(60, 30, 110)
+
+PagePlayer.Size = UDim2.new(1, -20, 1, -80); PagePlayer.Position = UDim2.new(0, 10, 0, 75); PagePlayer.BackgroundTransparency = 1
+PageSetting.Size = UDim2.new(1, -20, 1, -80); PageSetting.Position = UDim2.new(0, 10, 0, 75); PageSetting.BackgroundTransparency = 1; PageSetting.Visible = false
+
+local function styleWidget(b, p, t, pos, sz, bg)
+    b.Parent = p; b.Position = pos; b.Size = sz; b.Text = t; b.BackgroundColor3 = bg; b.TextColor3 = Color3.new(1, 1, 1); b.Font = Enum.Font.SourceSansBold; b.TextSize = 14
+    Instance.new("UICorner", b).CornerRadius = UDim.new(0, 6); local bs = Instance.new("UIStroke", b) bs.Thickness = 1; bs.Color = Color3.fromRGB(255, 255, 255); bs.Transparency = 0.7
+end
+
+styleWidget(B1, PagePlayer, "HỒI MÁU: TẮT", UDim2.new(0.02, 0, 0.05, 0), UDim2.new(0.96, 0, 0, 35), Color3.fromRGB(45, 20, 50))
+styleWidget(B2, PagePlayer, "HỒI ĐẦY MÁU", UDim2.new(0.02, 0, 0.26, 0), UDim2.new(0.96, 0, 0, 35), Color3.fromRGB(25, 40, 80))
+styleWidget(BF, PagePlayer, "FLY: TẮT", UDim2.new(0.02, 0, 0.47, 0), UDim2.new(0.96, 0, 0, 35), Color3.fromRGB(45, 20, 50))
+styleWidget(BE, PagePlayer, "ESP PLAYER: TẮT", UDim2.new(0.02, 0, 0.68, 0), UDim2.new(0.96, 0, 0, 35), Color3.fromRGB(45, 20, 50))
+
+B3.Parent = SG; B3.Position = UDim2.new(0.02, 0, 0.75, 0); B3.Size = UDim2.new(0, 120, 0, 45); B3.Text = "TÀNG HÌNH: TẮT"; B3.BackgroundColor3 = Color3.fromRGB(45, 20, 50); B3.TextColor3 = Color3.new(1, 1, 1); B3.Font = Enum.Font.SourceSansBold; B3.Active = true; B3.Draggable = true; Instance.new("UICorner", B3)
+local b3s = Instance.new("UIStroke", B3) b3s.Color = Color3.fromRGB(138, 43, 226)
+
+SI.Parent = PageSetting; SI.Position = UDim2.new(0.02, 0, 0.05, 0); SI.Size = UDim2.new(0.46, 0, 0, 32); SI.PlaceholderText = "Tốc độ"
+SF.Parent = PageSetting; SF.Position = UDim2.new(0.52, 0, 0.05, 0); SF.Size = UDim2.new(0.46, 0, 0, 32); SF.PlaceholderText = "Tốc độ Fly"
+MS.Parent = PageSetting; MS.Position = UDim2.new(0.02, 0, 0.20, 0); MS.Size = UDim2.new(0.46, 0, 0, 32); MS.PlaceholderText = "Số người"
+MI.Parent = PageSetting; MI.Position = UDim2.new(0.52, 0, 0.20, 0); MI.Size = UDim2.new(0.46, 0, 0, 32); MI.PlaceholderText = "Máu tối đa"
+SI_Server.Parent = PageSetting; SI_Server.Position = UDim2.new(0.02, 0, 0.35, 0); SI_Server.Size = UDim2.new(0.96, 0, 0, 32); SI_Server.PlaceholderText = "ID Server (Nhập nếu cần)"
+styleWidget(BS, PageSetting, "TÌM SERVER", UDim2.new(0.02, 0, 0.55, 0), UDim2.new(0.96, 0, 0, 40), Color3.fromRGB(15, 60, 45))
+
+for _, v in pairs({SI, MI, MS, SF, SI_Server}) do
+    v.BackgroundColor3 = Color3.fromRGB(25, 20, 45); v.TextColor3 = Color3.new(1, 1, 1); v.Font = Enum.Font.SourceSans; v.TextSize = 13
+    Instance.new("UICorner", v).CornerRadius = UDim.new(0, 6); local s = Instance.new("UIStroke", v) s.Color = Color3.fromRGB(80, 50, 120)
+end
+
+MB.Parent = SG; MB.Size = UDim2.new(0, 55, 0, 55); MB.Position = UDim2.new(0.1, 0, 0.1, 0); MB.Image = "rbxassetid://9054776101"; MB.BackgroundColor3 = Color3.fromRGB(30, 144, 255); MB.Active = true; MB.Draggable = true
+Instance.new("UICorner", MB).CornerRadius = UDim.new(0, 12); local mbs = Instance.new("UIStroke", MB) mbs.Thickness = 2; mbs.Color = Color3.fromRGB(255, 255, 255)
+
+ButtonPlayerTab.MouseButton1Click:Connect(function() PagePlayer.Visible = true; PageSetting.Visible = false; ButtonPlayerTab.BackgroundColor3 = Color3.fromRGB(60, 30, 110); ButtonSettingTab.BackgroundColor3 = Color3.fromRGB(30, 20, 55) end)
+ButtonSettingTab.MouseButton1Click:Connect(function() PagePlayer.Visible = false; PageSetting.Visible = true; ButtonSettingTab.BackgroundColor3 = Color3.fromRGB(60, 30, 110); ButtonPlayerTab.BackgroundColor3 = Color3.fromRGB(30, 20, 55) end)
+
+local HM, TH, TD, FlyActive, FlySpeed, MaxH, EspActive = false, false, 16, false, 50, 100, false
+local FakePos, WhiteBlock, SkyPlatform, CC, FC, BG, BV = nil, nil, nil, nil, nil, nil, nil
+
+B1.MouseButton1Click:Connect(function() HM = not HM; B1.BackgroundColor3 = HM and Color3.fromRGB(50,200,50) or Color3.fromRGB(45, 20, 50); B1.Text = HM and "HỒI MÁU: BẬT" or "HỒI MÁU: TẮT" end)
 B2.MouseButton1Click:Connect(function() local h = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid") if h then h.Health = h.MaxHealth end end)
+
 B3.MouseButton1Click:Connect(function()
-    local c = game.Players.LocalPlayer.Character; if not c then return end
-    TH = not TH; B3.BackgroundColor3 = TH and Color3.fromRGB(50,200,50) or Color3.fromRGB(200,50,50); B3.Text = TH and "TÀNG HÌNH: BẬT" or "TÀNG HÌNH: TẮT"
+    local c = game.Players.LocalPlayer.Character; if not c or not c:FindFirstChild("HumanoidRootPart") then return end
+    local r, cam, hum = c.HumanoidRootPart, workspace.CurrentCamera, c:FindFirstChildOfClass("Humanoid")
+    TH = not TH; B3.BackgroundColor3 = TH and Color3.fromRGB(50,200,50) or Color3.fromRGB(45, 20, 50); B3.Text = TH and "TÀNG HÌNH: BẬT" or "TÀNG HÌNH: TẮT"
     if TH then
-        c.Archivable = true; GB = c:Clone(); c.Archivable = false; GB.Parent = workspace
-        for _,v in pairs(GB:GetDescendants()) do if v:IsA("BasePart") then v.Color=Color3.fromRGB(100,100,100); v.Transparency=0.4 elseif v:IsA("Accessory") or v:IsA("Shirt") or v:IsA("Pants") then v:Destroy() end end
-        for _,v in pairs(c:GetDescendants()) do if v:IsA("BasePart") then v.Transparency=1 end end
-        CC = game:GetService("RunService").RenderStepped:Connect(function() if GB and GB:FindFirstChild("HumanoidRootPart") and c.HumanoidRootPart then GB.HumanoidRootPart.CFrame = c.HumanoidRootPart.CFrame end end)
+        FakePos = r.CFrame
+        SkyPlatform = Instance.new("Part", workspace)
+        SkyPlatform.Size = Vector3.new(15, 1, 15); SkyPlatform.CFrame = FakePos * CFrame.new(5000, 250, 0); SkyPlatform.Transparency = 1; SkyPlatform.Anchored = true; SkyPlatform.CanCollide = true
+        WhiteBlock = Instance.new("Part", workspace); WhiteBlock.Size = Vector3.new(2, 4, 2); WhiteBlock.Color = Color3.fromRGB(0, 191, 255); WhiteBlock.Material = Enum.Material.Neon; WhiteBlock.Transparency = 0.5; WhiteBlock.CanCollide = false; WhiteBlock.Anchored = true
+        for _, p in pairs(c:GetDescendants()) do if p:IsA("BasePart") or p:IsA("Decal") then p.Transparency = 1 end end
+        r.CFrame = SkyPlatform.CFrame + Vector3.new(0, 3, 0)
+        CC = game:GetService("RunService").RenderStepped:Connect(function(dt)
+            if TH and r and hum and WhiteBlock then
+                local md = hum.MoveDirection; FakePos = FakePos + (md * (TD * dt)); WhiteBlock.CFrame = FakePos
+                r.CFrame = SkyPlatform.CFrame + Vector3.new(0, 3, 0); r.Velocity = Vector3.new(0,0,0); cam.CameraSubject = WhiteBlock
+            end
+        end)
     else
-        if CC then CC:Disconnect() end; if GB then GB:Destroy() end
-        for _,v in pairs(c:GetDescendants()) do if v:IsA("BasePart") then v.Transparency=0 end end
+        if CC then CC:Disconnect() end
+        if WhiteBlock and r then r.CFrame = WhiteBlock.CFrame + Vector3.new(0, 3, 0) end
+        if WhiteBlock then WhiteBlock:Destroy() WhiteBlock = nil end; if SkyPlatform then SkyPlatform:Destroy() SkyPlatform = nil end
+        task.wait(0.05); cam.CameraSubject = hum
+        for _, p in pairs(c:GetDescendants()) do if (p:IsA("BasePart") and p.Name ~= "HumanoidRootPart") or p:IsA("Decal") then p.Transparency = 0 end end
     end
 end)
+
+BE.MouseButton1Click:Connect(function()
+    EspActive = not EspActive; BE.BackgroundColor3 = EspActive and Color3.fromRGB(50,200,50) or Color3.fromRGB(45, 20, 50); BE.Text = EspActive and "ESP PLAYER: BẬT" or "ESP PLAYER: TẮT"
+    if EspActive then 
+        for _, plr in pairs(game.Players:GetPlayers()) do
+            if plr ~= game.Players.LocalPlayer then
+                local B = Instance.new("BillboardGui", game.CoreGui); B.Size = UDim2.new(0,100,0,50); B.AlwaysOnTop = true
+                local T = Instance.new("TextLabel", B); T.Size = UDim2.new(1,0,1,0); T.BackgroundTransparency = 1; T.TextColor3 = Color3.new(0,1,0)
+                game:GetService("RunService").RenderStepped:Connect(function()
+                    if EspActive and plr.Character and plr.Character:FindFirstChild("Head") then B.Adornee = plr.Character.Head; T.Text = "@"..plr.Name.." HP:"..math.floor(plr.Character.Humanoid.Health) else B.Adornee = nil end
+                end)
+            end
+        end
+    end
+end)
+
+BS.MouseButton1Click:Connect(function() 
+    local id = SI_Server.Text ~= "" and SI_Server.Text or game.PlaceId
+    game:GetService("TeleportService"):Teleport(id, game.Players.LocalPlayer) 
+end)
+
+game:GetService("RunService").RenderStepped:Connect(function()
+    UIGradient.Rotation = (UIGradient.Rotation + 1) % 360
+    local h = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    if h then
+        h.MaxHealth = MaxH
+        if HM and h.Health < h.MaxHealth then h.Health = h.Health + 1 end -- Hồi máu thật từng chút
+        if not FlyActive then h.WalkSpeed = TH and 0 or TD end
+    end
+end)
+
 BF.MouseButton1Click:Connect(function()
-    FlyActive = not FlyActive; BF.BackgroundColor3 = FlyActive and Color3.fromRGB(50,200,50) or Color3.fromRGB(200,50,50); BF.Text = FlyActive and "FLY: BẬT" or "FLY: TẮT"
+    FlyActive = not FlyActive; BF.BackgroundColor3 = FlyActive and Color3.fromRGB(50,200,50) or Color3.fromRGB(45, 20, 50); BF.Text = FlyActive and "FLY: BẬT" or "FLY: TẮT"
     local r = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
     if FlyActive and r then
-        BG = Instance.new("BodyGyro", r); BG.MaxTorque = Vector3.new(1,1,1)*9e9; BG.CFrame = r.CFrame
-        BV = Instance.new("BodyVelocity", r); BV.MaxForce = Vector3.new(1,1,1)*9e9; BV.Velocity = Vector3.new(0,0,0)
-        FC = game:GetService("RunService").RenderStepped:Connect(function() BG.CFrame = workspace.CurrentCamera.CFrame; BV.Velocity = workspace.CurrentCamera.CFrame.LookVector * (game.Players.LocalPlayer.Character.Humanoid.MoveDirection.Magnitude > 0 and FlySpeed or 0) end)
-    else
-        if FC then FC:Disconnect() end; if BG then BG:Destroy() end; if BV then BV:Destroy() end
-    end
-end)
-BS.MouseButton1Click:Connect(function() local p=game.Players.LocalPlayer; game:GetService("TeleportService"):Teleport(game.PlaceId, p) end)
-SI.FocusLost:Connect(function() TD = tonumber(SI.Text) or 16 end)
-MI.FocusLost:Connect(function() MaxH = tonumber(MI.Text) or 100 end)
-SF.FocusLost:Connect(function() FlySpeed = tonumber(SF.Text) or 50 end)
-MB.MouseButton1Click:Connect(function() MF.Visible = not MF.Visible end)
-game:GetService("RunService").RenderStepped:Connect(function()
-    local h = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-    if h then h.MaxHealth = MaxH; if HM and h.Health < h.MaxHealth then h.Health = math.min(h.Health + 1, h.MaxHealth) end; if not FlyActive then h.WalkSpeed = TH and 0 or TD end end
+        BG = Instance.new("BodyGyro", r); BG.MaxTorque = Vector3.new(1,1,1)*9e9; BV = Instance.new("BodyVelocity", r); BV.MaxForce = Vector3.new(1,1,1)*9e9
+        FC = game:GetService("RunService").RenderStepped:Connect(function() BV.Velocity = (workspace.CurrentCamera.CFrame.LookVector * (game.Players.LocalPlayer.Character.Humanoid.MoveDirection.Z * -FlySpeed)) + (workspace.CurrentCamera.CFrame.RightVector * (game.Players.LocalPlayer.Character.Humanoid.MoveDirection.X * FlySpeed)) end)
+    else if FC then FC:Disconnect() end; if BG then BG:Destroy() end; if BV then BV:Destroy() end end
 end)
