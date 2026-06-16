@@ -17,12 +17,13 @@ local BE = Instance.new("TextButton", PagePlayer)
 
 local SI = Instance.new("TextBox", PageSetting)
 local SF = Instance.new("TextBox", PageSetting)
-local MS = Instance.new("TextBox", PageSetting)
 local MI = Instance.new("TextBox", PageSetting)
+local SS = Instance.new("TextBox", PageSetting) -- Nút chỉnh Size
 local SI_Server = Instance.new("TextBox", PageSetting)
 local BS = Instance.new("TextButton", PageSetting)
 
-MF.Size, MF.Position, MF.Active, MF.Draggable = UDim2.new(0, 340, 0, 350), UDim2.new(0.35, 0, 0.4, 0), true, true
+-- Tăng kích thước khung lên rộng hơn
+MF.Size, MF.Position, MF.Active, MF.Draggable = UDim2.new(0, 450, 0, 380), UDim2.new(0.3, 0, 0.3, 0), true, true
 MF.BackgroundColor3 = Color3.fromRGB(15, 10, 30)
 
 local UIStroke = Instance.new("UIStroke", MF)
@@ -42,52 +43,51 @@ TL.Size = UDim2.new(1, 0, 0, 35)
 TL.Text = "✧ NEBULA COSMIC MENU ✧"
 TL.TextColor3 = Color3.fromRGB(0, 255, 255)
 TL.Font = Enum.Font.FredokaOne
-TL.TextSize = 15
+TL.TextSize = 18
 TL.BackgroundTransparency = 1
 
-TabFrame.Size = UDim2.new(1, -20, 0, 30); TabFrame.Position = UDim2.new(0, 10, 0, 35); TabFrame.BackgroundTransparency = 1
+TabFrame.Size = UDim2.new(1, -20, 0, 35); TabFrame.Position = UDim2.new(0, 10, 0, 40); TabFrame.BackgroundTransparency = 1
 local function styleTabButton(b, txt, pos)
-    b.Size = UDim2.new(0.48, 0, 1, 0); b.Position = pos; b.Text = txt; b.Font = Enum.Font.SourceSansBold; b.TextSize = 14; b.TextColor3 = Color3.new(1, 1, 1); b.BackgroundColor3 = Color3.fromRGB(30, 20, 55)
+    b.Size = UDim2.new(0.48, 0, 1, 0); b.Position = pos; b.Text = txt; b.Font = Enum.Font.SourceSansBold; b.TextSize = 16; b.TextColor3 = Color3.new(1, 1, 1); b.BackgroundColor3 = Color3.fromRGB(30, 20, 55)
     Instance.new("UICorner", b).CornerRadius = UDim.new(0, 6); local s = Instance.new("UIStroke", b) s.Thickness = 1; s.Color = Color3.fromRGB(138, 43, 226)
 end
 styleTabButton(ButtonPlayerTab, "PLAYER", UDim2.new(0, 0, 0, 0)); styleTabButton(ButtonSettingTab, "SETTING", UDim2.new(0.52, 0, 0, 0))
 ButtonPlayerTab.BackgroundColor3 = Color3.fromRGB(60, 30, 110)
 
-PagePlayer.Size = UDim2.new(1, -20, 1, -80); PagePlayer.Position = UDim2.new(0, 10, 0, 75); PagePlayer.BackgroundTransparency = 1
-PageSetting.Size = UDim2.new(1, -20, 1, -80); PageSetting.Position = UDim2.new(0, 10, 0, 75); PageSetting.BackgroundTransparency = 1; PageSetting.Visible = false
+PagePlayer.Size = UDim2.new(1, -20, 1, -90); PagePlayer.Position = UDim2.new(0, 10, 0, 80); PagePlayer.BackgroundTransparency = 1
+PageSetting.Size = UDim2.new(1, -20, 1, -90); PageSetting.Position = UDim2.new(0, 10, 0, 80); PageSetting.BackgroundTransparency = 1; PageSetting.Visible = false
 
 local function styleWidget(b, p, t, pos, sz, bg)
-    b.Parent = p; b.Position = pos; b.Size = sz; b.Text = t; b.BackgroundColor3 = bg; b.TextColor3 = Color3.new(1, 1, 1); b.Font = Enum.Font.SourceSansBold; b.TextSize = 14
+    b.Parent = p; b.Position = pos; b.Size = sz; b.Text = t; b.BackgroundColor3 = bg; b.TextColor3 = Color3.new(1, 1, 1); b.Font = Enum.Font.SourceSansBold; b.TextSize = 15
     Instance.new("UICorner", b).CornerRadius = UDim.new(0, 6); local bs = Instance.new("UIStroke", b) bs.Thickness = 1; bs.Color = Color3.fromRGB(255, 255, 255); bs.Transparency = 0.7
 end
 
-styleWidget(B1, PagePlayer, "HỒI MÁU: TẮT", UDim2.new(0.02, 0, 0.05, 0), UDim2.new(0.96, 0, 0, 35), Color3.fromRGB(45, 20, 50))
-styleWidget(B2, PagePlayer, "HỒI ĐẦY MÁU", UDim2.new(0.02, 0, 0.26, 0), UDim2.new(0.96, 0, 0, 35), Color3.fromRGB(25, 40, 80))
-styleWidget(BF, PagePlayer, "FLY: TẮT", UDim2.new(0.02, 0, 0.47, 0), UDim2.new(0.96, 0, 0, 35), Color3.fromRGB(45, 20, 50))
-styleWidget(BE, PagePlayer, "ESP PLAYER: TẮT", UDim2.new(0.02, 0, 0.68, 0), UDim2.new(0.96, 0, 0, 35), Color3.fromRGB(45, 20, 50))
+styleWidget(B1, PagePlayer, "HỒI MÁU: TẮT", UDim2.new(0.02, 0, 0.05, 0), UDim2.new(0.96, 0, 0, 40), Color3.fromRGB(45, 20, 50))
+styleWidget(B2, PagePlayer, "HỒI ĐẦY MÁU", UDim2.new(0.02, 0, 0.25, 0), UDim2.new(0.96, 0, 0, 40), Color3.fromRGB(25, 40, 80))
+styleWidget(BF, PagePlayer, "FLY: TẮT", UDim2.new(0.02, 0, 0.45, 0), UDim2.new(0.96, 0, 0, 40), Color3.fromRGB(45, 20, 50))
+styleWidget(BE, PagePlayer, "ESP PLAYER: TẮT", UDim2.new(0.02, 0, 0.65, 0), UDim2.new(0.96, 0, 0, 40), Color3.fromRGB(45, 20, 50))
 
-B3.Parent = SG; B3.Position = UDim2.new(0.02, 0, 0.75, 0); B3.Size = UDim2.new(0, 120, 0, 45); B3.Text = "TÀNG HÌNH: TẮT"; B3.BackgroundColor3 = Color3.fromRGB(45, 20, 50); B3.TextColor3 = Color3.new(1, 1, 1); B3.Font = Enum.Font.SourceSansBold; B3.Active = true; B3.Draggable = true; Instance.new("UICorner", B3)
-local b3s = Instance.new("UIStroke", B3) b3s.Color = Color3.fromRGB(138, 43, 226)
+B3.Parent = SG; B3.Position = UDim2.new(0.02, 0, 0.75, 0); B3.Size = UDim2.new(0, 140, 0, 50); B3.Text = "TÀNG HÌNH: TẮT"; B3.BackgroundColor3 = Color3.fromRGB(45, 20, 50); B3.TextColor3 = Color3.new(1, 1, 1); B3.Font = Enum.Font.SourceSansBold; B3.Active = true; B3.Draggable = true; Instance.new("UICorner", B3)
 
-SI.Parent = PageSetting; SI.Position = UDim2.new(0.02, 0, 0.05, 0); SI.Size = UDim2.new(0.46, 0, 0, 32); SI.PlaceholderText = "Tốc độ"
-SF.Parent = PageSetting; SF.Position = UDim2.new(0.52, 0, 0.05, 0); SF.Size = UDim2.new(0.46, 0, 0, 32); SF.PlaceholderText = "Tốc độ Fly"
-MS.Parent = PageSetting; MS.Position = UDim2.new(0.02, 0, 0.20, 0); MS.Size = UDim2.new(0.46, 0, 0, 32); MS.PlaceholderText = "Số người"
-MI.Parent = PageSetting; MI.Position = UDim2.new(0.52, 0, 0.20, 0); MI.Size = UDim2.new(0.46, 0, 0, 32); MI.PlaceholderText = "Máu tối đa"
-SI_Server.Parent = PageSetting; SI_Server.Position = UDim2.new(0.02, 0, 0.35, 0); SI_Server.Size = UDim2.new(0.96, 0, 0, 32); SI_Server.PlaceholderText = "ID Server (Nhập nếu cần)"
-styleWidget(BS, PageSetting, "TÌM SERVER", UDim2.new(0.02, 0, 0.55, 0), UDim2.new(0.96, 0, 0, 40), Color3.fromRGB(15, 60, 45))
+SI.Parent = PageSetting; SI.Position = UDim2.new(0.02, 0, 0.05, 0); SI.Size = UDim2.new(0.46, 0, 0, 35); SI.PlaceholderText = "Tốc độ"
+SF.Parent = PageSetting; SF.Position = UDim2.new(0.52, 0, 0.05, 0); SF.Size = UDim2.new(0.46, 0, 0, 35); SF.PlaceholderText = "Tốc độ Fly"
+MI.Parent = PageSetting; MI.Position = UDim2.new(0.02, 0, 0.22, 0); MI.Size = UDim2.new(0.46, 0, 0, 35); MI.PlaceholderText = "Máu tối đa"
+SS.Parent = PageSetting; SS.Position = UDim2.new(0.52, 0, 0.22, 0); SS.Size = UDim2.new(0.46, 0, 0, 35); SS.PlaceholderText = "Size (VD: 1)"
+SI_Server.Parent = PageSetting; SI_Server.Position = UDim2.new(0.02, 0, 0.4, 0); SI_Server.Size = UDim2.new(0.96, 0, 0, 35); SI_Server.PlaceholderText = "ID Server"
+styleWidget(BS, PageSetting, "TÌM SERVER", UDim2.new(0.02, 0, 0.6, 0), UDim2.new(0.96, 0, 0, 45), Color3.fromRGB(15, 60, 45))
 
-for _, v in pairs({SI, MI, MS, SF, SI_Server}) do
-    v.BackgroundColor3 = Color3.fromRGB(25, 20, 45); v.TextColor3 = Color3.new(1, 1, 1); v.Font = Enum.Font.SourceSans; v.TextSize = 13
+for _, v in pairs({SI, MI, SF, SS, SI_Server}) do
+    v.BackgroundColor3 = Color3.fromRGB(25, 20, 45); v.TextColor3 = Color3.new(1, 1, 1); v.Font = Enum.Font.SourceSans; v.TextSize = 14
     Instance.new("UICorner", v).CornerRadius = UDim.new(0, 6); local s = Instance.new("UIStroke", v) s.Color = Color3.fromRGB(80, 50, 120)
 end
 
-MB.Parent = SG; MB.Size = UDim2.new(0, 55, 0, 55); MB.Position = UDim2.new(0.1, 0, 0.1, 0); MB.Image = "rbxassetid://9054776101"; MB.BackgroundColor3 = Color3.fromRGB(30, 144, 255); MB.Active = true; MB.Draggable = true
-Instance.new("UICorner", MB).CornerRadius = UDim.new(0, 12); local mbs = Instance.new("UIStroke", MB) mbs.Thickness = 2; mbs.Color = Color3.fromRGB(255, 255, 255)
+MB.Parent = SG; MB.Size = UDim2.new(0, 60, 0, 60); MB.Position = UDim2.new(0.05, 0, 0.05, 0); MB.Image = "rbxassetid://9054776101"; MB.BackgroundColor3 = Color3.fromRGB(30, 144, 255); MB.Active = true; MB.Draggable = true
+Instance.new("UICorner", MB).CornerRadius = UDim.new(0, 15)
 
 ButtonPlayerTab.MouseButton1Click:Connect(function() PagePlayer.Visible = true; PageSetting.Visible = false; ButtonPlayerTab.BackgroundColor3 = Color3.fromRGB(60, 30, 110); ButtonSettingTab.BackgroundColor3 = Color3.fromRGB(30, 20, 55) end)
 ButtonSettingTab.MouseButton1Click:Connect(function() PagePlayer.Visible = false; PageSetting.Visible = true; ButtonSettingTab.BackgroundColor3 = Color3.fromRGB(60, 30, 110); ButtonPlayerTab.BackgroundColor3 = Color3.fromRGB(30, 20, 55) end)
 
-local HM, TH, TD, FlyActive, FlySpeed, MaxH, EspActive = false, false, 16, false, 50, 100, false
+local HM, TH, TD, FlyActive, FlySpeed, MaxH, EspActive, CharSize = false, false, 16, false, 50, 100, false, 1
 local FakePos, WhiteBlock, SkyPlatform, CC, FC, BG, BV = nil, nil, nil, nil, nil, nil, nil
 
 B1.MouseButton1Click:Connect(function() HM = not HM; B1.BackgroundColor3 = HM and Color3.fromRGB(50,200,50) or Color3.fromRGB(45, 20, 50); B1.Text = HM and "HỒI MÁU: BẬT" or "HỒI MÁU: TẮT" end)
@@ -100,7 +100,7 @@ B3.MouseButton1Click:Connect(function()
     if TH then
         FakePos = r.CFrame
         SkyPlatform = Instance.new("Part", workspace)
-        SkyPlatform.Size = Vector3.new(15, 1, 15); SkyPlatform.CFrame = FakePos * CFrame.new(5000, 250, 0); SkyPlatform.Transparency = 1; SkyPlatform.Anchored = true; SkyPlatform.CanCollide = true
+        SkyPlatform.Size = Vector3.new(15, 1, 15); SkyPlatform.CFrame = FakePos + Vector3.new(0, 200, 0); SkyPlatform.Transparency = 1; SkyPlatform.Anchored = true; SkyPlatform.CanCollide = true
         WhiteBlock = Instance.new("Part", workspace); WhiteBlock.Size = Vector3.new(2, 4, 2); WhiteBlock.Color = Color3.fromRGB(0, 191, 255); WhiteBlock.Material = Enum.Material.Neon; WhiteBlock.Transparency = 0.5; WhiteBlock.CanCollide = false; WhiteBlock.Anchored = true
         for _, p in pairs(c:GetDescendants()) do if p:IsA("BasePart") or p:IsA("Decal") then p.Transparency = 1 end end
         r.CFrame = SkyPlatform.CFrame + Vector3.new(0, 3, 0)
@@ -141,11 +141,18 @@ end)
 
 game:GetService("RunService").RenderStepped:Connect(function()
     UIGradient.Rotation = (UIGradient.Rotation + 1) % 360
-    local h = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    local char = game.Players.LocalPlayer.Character
+    local h = char and char:FindFirstChildOfClass("Humanoid")
     if h then
         h.MaxHealth = MaxH
-        if HM and h.Health < h.MaxHealth then h.Health = h.Health + 1 end -- Hồi máu thật từng chút
+        if HM and h.Health < h.MaxHealth then h.Health = h.Health + 1 end
         if not FlyActive then h.WalkSpeed = TH and 0 or TD end
+        -- Chỉnh Size nhân vật
+        if char:FindFirstChild("HumanoidRootPart") then
+            for _, v in pairs(char:GetDescendants()) do
+                if v:IsA("BasePart") then v.Size = v.Size * CharSize end
+            end
+        end
     end
 end)
 
@@ -157,3 +164,9 @@ BF.MouseButton1Click:Connect(function()
         FC = game:GetService("RunService").RenderStepped:Connect(function() BV.Velocity = (workspace.CurrentCamera.CFrame.LookVector * (game.Players.LocalPlayer.Character.Humanoid.MoveDirection.Z * -FlySpeed)) + (workspace.CurrentCamera.CFrame.RightVector * (game.Players.LocalPlayer.Character.Humanoid.MoveDirection.X * FlySpeed)) end)
     else if FC then FC:Disconnect() end; if BG then BG:Destroy() end; if BV then BV:Destroy() end end
 end)
+
+SI.FocusLost:Connect(function() TD = tonumber(SI.Text) or 16 end)
+MI.FocusLost:Connect(function() MaxH = tonumber(MI.Text) or 100 end)
+SF.FocusLost:Connect(function() FlySpeed = tonumber(SF.Text) or 50 end)
+SS.FocusLost:Connect(function() CharSize = tonumber(SS.Text) or 1 end)
+MB.MouseButton1Click:Connect(function() MF.Visible = not MF.Visible end)
